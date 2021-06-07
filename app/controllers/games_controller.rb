@@ -6,16 +6,16 @@ class GamesController < ApplicationController
 
   def generate_grid(grid_size)
     # TODO: generate random grid of letters
-    @grid = []
-    until @grid.size == @grid_size
-      @grid << ('a'..'z').to_a.sample
+    grid = []
+    until grid.size == grid_size
+      grid << ('a'..'z').to_a.sample
     end
-    return @grid
+    return grid
   end
 
-  def valid?(guess, try)
-    guess.chars.all? { |letter| guess.count(letter) <= try.count(letter) }
-  end
+  # def valid?(guess, try)
+  #   guess.chars.all? { |letter| guess.count(letter) <= try.count(letter) }
+  # end
 
   def english?(string)
     word_serialized = URI.open("https://wagon-dictionary.herokuapp.com/#{string}").read
@@ -34,7 +34,6 @@ class GamesController < ApplicationController
   end
 
   def score
-    # english?(params[:word])
-    valid?(params[:word], @letters)
+    english?(params[:word])
   end
 end
